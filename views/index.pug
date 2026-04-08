@@ -1,23 +1,79 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  ol
-  each val in todos
-    li
-      span= val.task + ' - '
-      if val.completed > 0
-        span Completed
-      else
-        span Not Completed
-      form(method='POST' action='/delete')
-        input(type='hidden', name='id', value=val.id)
-        button(type='submit') Delete
+  .container
+    h1= title
+    p Welcome to #{title}
 
-  hr
-  h2 Add a new task
-  form(method='POST' action='/create')
-    label(for='task') Task:
-    input(type='text', name='task', id='task', required)
-    button(type='submit') Create Task
+    hr
+    .add-task-section
+      h2 Add a new task
+      form.add-form(method='POST', action='/create', onsubmit='return validateTask()')
+        label(for='task') Task:
+        input#task(type='text', name='task', required, placeholder="What needs to be done?")
+        button.btn-create(type='submit') Create Task
+
+    hr
+    ol
+      h2 Tasks
+      each val in todos
+        li.task-card
+          .task-details
+            strong.task-text= val.task
+            span(class=val.completed > 0 ? 'status completed' : 'status pending')
+              = val.completed > 0 ? ' - Completed' : ' - Not Completed'
+
+          .task-actions
+            // Button to trigger edit
+            button.btn-edit(type='button', onclick='showEdit(this)') Edit
+
+            // Hidden edit form
+            form.edit-form(method='POST', action='/edit', style='display:none')
+              input(type='hidden', name='id', value=val.id)
+              input.edit-input(type='text', name='task', value=val.task)
+              button.btn-save(type='submit') Save
+              button.btn-cancel(type='button', onclick='hideEdit(this)') Cancel
+
+            // Toggle completion form
+            form(method='POST', action='/toggle')
+              input(type='hidden', name='id', value=val.id)
+              input(type='hidden', name='completed', value=val.completed)
+              button.btn-toggle(type='submit', class=val.completed > 0 ? 'is-complete' : '')
+                = val.completed > 0 ? 'Not Complete' : 'Complete'
+
+            // Delete task form
+            form(method='POST', action='/delete')
+              input(type='hidden', name='id', value=val.id)
+              button.btn-delete(type='submit') Delete
+
+  // JavaScript for validation and edit toggle
+  script.
+    function validateTask() {
+      const taskInput = document.getElementById('task');
+      if (!taskInput.value.trim()) {
+        alert('Task cannot be blank');
+        return false;
+      }
+      return true;
+    }
+
+    function showEdit(btn) {
+      const taskCard = btn.closest('.task-card');
+      const taskText = taskCard.querySelector('.task-text');
+      const editForm = taskCard.querySelector('.edit-form');
+
+      taskText.style.display = 'none';
+      btn.style.display = 'none';
+      editForm.style.display = 'inline-block';
+    }
+
+    function hideEdit(btn) {
+      const taskCard = btn.closest('.task-card');
+      const taskText = taskCard.querySelector('.task-text');
+      const editBtn = taskCard.querySelector('.btn-edit');
+      const editForm = taskCard.querySelector('.edit-form');
+
+      taskText.style.display = 'inline';
+      editBtn.style.display = 'inline-block';
+      editForm.style.display = 'none';
+    }

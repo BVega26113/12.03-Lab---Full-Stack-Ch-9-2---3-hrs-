@@ -1,8 +1,90 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #e6f0ff; 
+  margin: 0;
+  padding: 40px 20px; /* Added padding so the app doesn't touch the top */
 }
 
-a {
-  color: #00B7FF;
+h1, h2, p {
+  text-align: center;
+  color: #003366; 
+}
+
+ol {
+  list-style: none;
+  max-width: 800px; /* Slightly wider to fit all buttons in one row */
+  margin: 20px auto;
+  padding: 0;
+}
+
+li {
+  background: #cce0ff; 
+  margin: 8px 0;
+  padding: 12px 20px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between; /* Pushes text to left, buttons to right */
+  align-items: center;
+}
+
+/* --- THE FIX FOR SIDE-BY-SIDE BUTTONS --- */
+/* This targets the area containing your forms */
+.task-actions, .button-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Ensure the forms inside the row don't create extra spacing */
+form {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #3399ff; 
+  color: white;
+  font-weight: bold;
+  white-space: nowrap; /* Prevents button text from wrapping */
+}
+
+button:hover {
+  background-color: #0052cc;
+}
+
+/* --- THE FIX FOR CENTERING THE ADD TASK SECTION --- */
+.add-task-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.add-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #3399ff;
+  font-size: 1rem;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #99ccff; 
+  margin: 30px auto;
+  max-width: 600px;
 }
