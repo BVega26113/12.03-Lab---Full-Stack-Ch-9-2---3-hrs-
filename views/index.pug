@@ -8,6 +8,7 @@ block content
     hr
     .add-task-section
       h2 Add a new task
+      // reference:https://www.w3schools.com/tags/att_input_required.asp
       form.add-form(method='POST', action='/create', onsubmit='return validateTask()')
         label(for='task') Task:
         input#task(type='text', name='task', required, placeholder="What needs to be done?")
@@ -28,6 +29,7 @@ block content
             button.btn-edit(type='button', onclick='showEdit(this)') Edit
 
             // Hidden edit form
+            // reference: https://www.w3schools.com/tags/att_input_required.asp
             form.edit-form(method='POST', action='/edit', style='display:none')
               input(type='hidden', name='id', value=val.id)
               input.edit-input(type='text', name='task', required, value=val.task)
