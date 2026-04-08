@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+// GET home page 
 router.get('/', function(req, res, next){
   try {
     req.db.query('SELECT * FROM todos;', (err, results) => {
@@ -35,6 +35,7 @@ router.post('/create', function (req, res, next) {
     }
 });
 
+// Delete button
 router.post('/delete', function (req, res, next) {
     const { id } = req.body;
     try {
@@ -53,7 +54,7 @@ router.post('/delete', function (req, res, next) {
     }
 });
 
-// Edit task
+// Edit button/tasks
 router.post('/edit', function(req, res, next) {
   const { id, task } = req.body;
   if (!task || task.trim() === '') {
@@ -68,7 +69,7 @@ router.post('/edit', function(req, res, next) {
   });
 });
 
-// Complete/not complete 
+// Complete/not complete button
 router.post('/toggle', function(req, res, next) {
     const { id, completed } = req.body;
     const newStatus = completed === '1' ? 0 : 1; // toggle 0 ↔ 1
