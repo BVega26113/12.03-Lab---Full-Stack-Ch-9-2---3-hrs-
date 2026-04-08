@@ -30,7 +30,7 @@ block content
             // Hidden edit form
             form.edit-form(method='POST', action='/edit', style='display:none')
               input(type='hidden', name='id', value=val.id)
-              input.edit-input(type='text', name='task', value=val.task)
+              input.edit-input(type='text', name='task', required, value=val.task)
               button.btn-save(type='submit') Save
               button.btn-cancel(type='button', onclick='hideEdit(this)') Cancel
 
